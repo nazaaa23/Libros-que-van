@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Libros que van"
+description = "Landing page para una librería infantil de Gonnet, con catálogo destacado, reseñas de clientes, información del local y formulario de contacto."
+version = "1.0.0"
+id = "artifacts/libros-que-van"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25211
+
+[services.development]
+run = "pnpm --filter @workspace/libros-que-van run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/libros-que-van", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/libros-que-van/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25211"
+BASE_PATH = "/"
